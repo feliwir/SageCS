@@ -82,9 +82,11 @@
     <Compile Include="Source\Core\Loaders\ImageLoader.cs" />
     <Compile Include="Source\Core\Loaders\W3DLoader.cs" />
     <Compile Include="Source\Core\Loaders\WavLoader.cs" />
-    <Compile Include="Source\Graphics\Hierarchy.cs" />
-    <Compile Include="Source\Graphics\Mesh.cs" />
-    <Compile Include="Source\Graphics\Renderer.cs" />
+    <Compile Include="Source\Graphics\Buffer.cs" />
+    <Compile Include="Source\Graphics\Camera.cs" />
+    <Compile Include="Source\Graphics\Camera2D.cs" />
+    <Compile Include="Source\Graphics\Drawable.cs" />
+    <Compile Include="Source\Graphics\GraphicsSystem.cs" />
     <Compile Include="Source\Graphics\Shader.cs" />
     <Compile Include="Source\Graphics\Sprite.cs" />
     <Compile Include="Source\Graphics\Texture.cs" />
@@ -93,8 +95,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Source\Core\Loaders\BigArchive.cs" />
     <Compile Include="Source\Core\Resource.cs" />
-    <Compile Include="Source\Graphics\W3DMesh.cs" />
-    <Compile Include="Source\Graphics\Model.cs" />
     <Compile Include="Source\INI\AmbientStream.cs" />
     <Compile Include="Source\INI\Armor.cs" />
     <Compile Include="Source\INI\CommandButton.cs" />

@@ -7,7 +7,9 @@ using System.IO;
 using SageCS.Audio;
 using SageCS.Core.Loaders;
 using System.Diagnostics;
+using SageCS.Graphics;
 using SageCS.INI;
+using SageCS.Source.Graphics;
 
 namespace SageCS.Core
 {
@@ -15,37 +17,31 @@ namespace SageCS.Core
     {
         ~Engine()
         {
-            Renderer.DeleteBuffers();
+
         }
 
         protected override void OnLoad(EventArgs e)
         {
             base.WindowBorder = WindowBorder.Hidden;
             base.OnLoad(e);
+            GraphicsSystem.Init();
 
             Title = "SageCS - BFME II";
-
-            Renderer.shaders.Add("textured", new Shader(Resource.GetShader("tex.vert"), Resource.GetShader("tex.frag")));
-            Renderer.activeShader = "textured";
-
+       
             try
             {
                 Texture t = new Texture();
-                t.Load(File.Open("GermanSplash.jpg", FileMode.Open));
-                Renderer.textures.Add("splash", t);
+                t.Load(File.Open("GermanSplash.jpg", FileMode.Open)); 
+                Sprite sp = new Sprite(Vector2.Zero, new Vector2(800,600),t );
+                sp.Draw(GraphicsSystem.GetScreen());
+
             }
             catch
             {
                 Texture t = new Texture();
-                t.Load(File.Open("EnglishSplashjpg", FileMode.Open));
-                Renderer.textures.Add("splash", t);
+                t.Load(File.Open("EnglishSplash.jpg", FileMode.Open));
             }
             
-            Sprite background = new Sprite("splash");
-
-            Renderer.initProgram(Width, Height);
-
-            Renderer.render();
             base.SwapBuffers();
 
             FileSystem.Init();
@@ -56,9 +52,9 @@ namespace SageCS.Core
             Texture tex = new Texture();
             var texS = FileSystem.Open("art\\compiledtextures\\al\\all_faction_banners.dds");
             tex.Load(texS);
-            W3DLoader.Load(FileSystem.Open("art\\w3d\\gu\\gumaarms_skn.w3d"));
-            W3DLoader.Load(FileSystem.Open("art\\w3d\\gu\\gumaarms_runa.w3d"));
-            W3DLoader.Load(FileSystem.Open("art\\w3d\\gu\\gumaarms_skl.w3d"));
+            //W3DLoader.Load(FileSystem.Open("art\\w3d\\gu\\gumaarms_skn.w3d"));
+            //W3DLoader.Load(FileSystem.Open("art\\w3d\\gu\\gumaarms_runa.w3d"));
+            //W3DLoader.Load(FileSystem.Open("art\\w3d\\gu\\gumaarms_skl.w3d"));
 
             INIManager.ParseINIs();
             var buffer = WavLoader.Load(FileSystem.Open("data\\audio\\speech\\ucheer.wav"));
@@ -71,7 +67,7 @@ namespace SageCS.Core
         protected override void OnRenderFrame(FrameEventArgs e)
         {
             base.OnRenderFrame(e);
-            Renderer.render();
+
             base.SwapBuffers();
         }
 
@@ -82,7 +78,7 @@ namespace SageCS.Core
             {
                 Exit();
             }
-            Renderer.update();
+
         }
     }
 }

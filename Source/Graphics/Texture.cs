@@ -1,10 +1,7 @@
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 
 using OpenTK.Graphics.OpenGL4;
 using SageCS.Core.Loaders;
-using System;
 
 namespace SageCS.Core.Graphics
 {
@@ -21,9 +18,6 @@ namespace SageCS.Core.Graphics
         {
             ImageData img = ImageLoader.Load(s);
             GL.BindTexture(TextureTarget.Texture2D, texID);
-
-            //GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, img.width, img.height, 0,
-            //        OpenTK.Graphics.OpenGL4.PixelFormat.RgbaInteger, PixelType.UnsignedByte, img.data);
 
             GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, img.width, img.height, 0,
                      img.format, PixelType.UnsignedByte, img.data);

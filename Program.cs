@@ -1,8 +1,3 @@
-using System.Drawing;
-using OpenTK;
-using OpenTK.Graphics.OpenGL;
-using OpenTK.Input;
-
 namespace SageCS
 {
     class Program

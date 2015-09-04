@@ -1,94 +1,39 @@
-using OpenTK;
+﻿using OpenTK;
+using OpenTK.Graphics.OpenGL;
 using SageCS.Core.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using SageCS.Graphics;
 
-namespace SageCS.Core.Graphics
+namespace SageCS.Source.Graphics
 {
-    class Sprite : Mesh
+    public class Sprite : IDrawable
     {
-        public Sprite()
-        : base()
+        private Buffer vertBuf;
+        private Texture tex;
+        private Matrix4 modelMat;
+
+        public Sprite(OpenTK.Vector2 pos, OpenTK.Vector2 size,Texture t)
         {
-            VertCount = 4;
-            IndiceCount = 6;
-            TextureCoordsCount = 4;
-            IsTextured = true;
-            Renderer.meshes.Add(this);
+            vertBuf = new Buffer();
+            Vector2[] vertices = new Vector2[6];
+            vertices[0] = new Vector2(0f, 0f);
+            vertices[1] = new Vector2(pos.X, 0f);
+            vertices[2] = new Vector2(0f,pos.Y);
+            vertices[3] = new Vector2(pos.X, 0f);
+            vertices[4] = new Vector2(0f, pos.Y);
+            vertices[5] = pos;
+
+            vertBuf.BufferData(BufferTarget.ArrayBuffer, BufferUsageHint.StaticDraw, vertices); 
+            tex = t;
         }
 
-        public Sprite(Texture tex)
-        : base()
+        public override void Draw(Camera cam)
         {
-            texture = tex;
-            VertCount = 4;
-            IndiceCount = 6;
-            TextureCoordsCount = 4;
-            IsTextured = true;
-            Renderer.meshes.Add(this);
-        }
-
-        public Sprite(string tex)
-        : base()
-        {
-            texture = Renderer.textures[tex];
-            VertCount = 4;
-            IndiceCount = 6;
-            TextureCoordsCount = 4;
-            IsTextured = true;
-            Renderer.meshes.Add(this);
-        }
-
-        public override Vector3[] GetVerts()
-        {
-            return new Vector3[]
-            {
-                new Vector3(-1.0f, 1.0f, 0f),
-                new Vector3(1.0f, 1.0f, 0f),
-                new Vector3(1.0f, -1.0f, 0f),
-                new Vector3(-1.0f, -1.0f, 0f),
-            };
-        }
-
-        public override int[] GetIndices(int offset = 0)
-        {
-            int[] inds = new int[] {0,1,2,0,2,3};
-
-            if (offset != 0)
-            {
-                for (int i = 0; i < inds.Length; i++)
-                {
-                    inds[i] += offset;
-                }
-            }
-            return inds;
-        }
-
-        public override Vector2[] GetTextureCoords()
-        {
-            return new Vector2[] {
-            new Vector2(0.0f, 1.0f),
-            new Vector2(1.0f, 1.0f),
-            new Vector2(1.0f, 0.0f),
-            new Vector2(0.0f, 0.0f),
-            };
-        }
-
-        public override void CalculateModelMatrix()
-        {
-           
-        }
-
-        public override Vector3[] GetColorData()
-        {
-            return new Vector3[] {
-                new Vector3( 1f, 0f, 0f),
-                new Vector3( 0f, 0f, 1f),
-                new Vector3( 0f, 1f, 0f),
-            };
+            GL.EnableVertexAttribArray(0);
+            vertBuf.Bind(BufferTarget.ArrayBuffer); 
+            //tex.Bind();
+            GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 0, 0);
+            GL.DrawArrays(PrimitiveType.Triangles,0,6);
+            GL.DisableVertexAttribArray(0);
         }
     }
 }

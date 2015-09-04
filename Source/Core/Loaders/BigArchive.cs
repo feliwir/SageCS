@@ -1,9 +1,7 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace SageCS.Core.Loaders
 {
@@ -35,7 +33,7 @@ namespace SageCS.Core.Loaders
         public static SortedDictionary<string,Stream> GetEntries(string archive)
         {
             SortedDictionary<string, Stream> result = new SortedDictionary<string, Stream>();
-            BinaryReader br = new BinaryReader(File.OpenRead(archive));
+            BinaryReader br = new BinaryReader(File.Open(archive,FileMode.Open,FileAccess.Read,FileShare.ReadWrite));
             StringBuilder sb = new StringBuilder();
 
             var magic = new String(br.ReadChars(4));
