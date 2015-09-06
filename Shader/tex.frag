@@ -2,7 +2,7 @@
 
 out vec4 outputColor;
 
-uniform sampler2D maintexture;
+//uniform sampler2D maintexture;
 
 void main()
 {
