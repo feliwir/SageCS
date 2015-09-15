@@ -22,7 +22,8 @@ namespace SageCS.Source.Graphics
             vertices[4] = new Vector2(pos.X, pos.Y+size.Y);
             vertices[5] = pos + size;
 
-            vertBuf.BufferData(BufferTarget.ArrayBuffer, BufferUsageHint.StaticDraw, vertices); 
+            vertBuf.BufferData(BufferTarget.ArrayBuffer, BufferUsageHint.StaticDraw, vertices);
+            modelMat = Matrix4.Identity;
             tex = t;
         }
 
@@ -33,7 +34,7 @@ namespace SageCS.Source.Graphics
             //tex.Bind();
             Matrix4 mvp = cam.GetProjectionMatrix()*cam.GetViewMatrix()*modelMat;
             GL.UniformMatrix4(0,false,ref mvp);
-            GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 0, 0);
+            GL.VertexAttribPointer(0, 2, VertexAttribPointerType.Float, false, 0, 0);
             GL.DrawArrays(PrimitiveType.Triangles,0,6);
             GL.DisableVertexAttribArray(0);
         }
